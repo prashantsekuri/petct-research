@@ -1,0 +1,39 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Local derived output
+output/*
+!output/.gitkeep
+
+# Source-data directories
+data/
+dicom/
+studies/
+
+# Common DICOM filenames (not a complete protection boundary)
+*.dcm
+*.dicom
+DICOMDIR
+
+# Derived medical-image volumes
+*.nii
+*.nii.gz
+*.nrrd
+*.mha
+*.mhd
