@@ -27,6 +27,8 @@ deterministic pipeline.
 
 ## Current scope
 
-Maintain a minimal Python src-layout project using pytest. Do not add DICOM
-discovery or processing, medical AI models, segmentation logic, or LLM
+The implemented scope is limited to read-only DICOM discovery and a study/series
+inventory based on allowlisted metadata. Maintain strict parsing without a
+forced-read fallback unless explicitly requested. Do not add PET-specific
+validation, pixel processing, medical AI models, segmentation logic, or LLM
 integration until explicitly requested.

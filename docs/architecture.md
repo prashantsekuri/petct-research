@@ -32,8 +32,9 @@ DICOM discovery
 -> optional LLM interpretation
 ```
 
-The stages describe the intended processing order; none are implemented in the
-current skeleton.
+The read-only DICOM discovery and series inventory stages are implemented. They
+use strict DICOM parsing, read only allowlisted metadata without pixel data, and
+perform no writes. The remaining stages are not implemented.
 
 ## Deterministic quantitative results
 

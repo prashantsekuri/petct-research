@@ -21,13 +21,32 @@ data must remain outside the repository.
 
 ## Development setup
 
+Use the pre-created `medical_env` virtual environment located beside this
+repository:
+
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+source ../medical_env/bin/activate
 python -m pip install -e ".[dev]"
 python -m pytest
 ```
 
 The intended system design is documented in
-[`docs/architecture.md`](docs/architecture.md). DICOM processing is not yet
-implemented.
+[`docs/architecture.md`](docs/architecture.md).
+
+## Read-only DICOM inventory
+
+Inventory a source directory located outside this repository:
+
+```bash
+python -m petct.inventory /path/to/dicom
+```
+
+The command recursively reads only explicitly allowlisted metadata using strict
+DICOM parsing and does not read pixel data. It groups objects by study and
+series, counts instances, and reports whether rows, columns, slice thickness,
+or pixel spacing vary within a series. Non-DICOM and unreadable files are
+skipped without printing their names.
+
+The inventory command performs no writes. PET metadata validation, SUV
+validation, volume conversion, segmentation, and measurement functionality are
+not implemented.
