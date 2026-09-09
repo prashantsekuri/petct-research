@@ -12,6 +12,7 @@ dependencies = [
     "nibabel>=5.3,<6",
     "numpy>=2.3,<3",
     "pydicom>=3.0,<4",
+    "scipy>=1.14,<2",
 ]
 
 [project.optional-dependencies]
