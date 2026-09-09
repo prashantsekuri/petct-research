@@ -32,9 +32,11 @@ DICOM discovery
 -> optional LLM interpretation
 ```
 
-The read-only DICOM discovery and series inventory stages are implemented. They
-use strict DICOM parsing, read only allowlisted metadata without pixel data, and
-perform no writes. The remaining stages are not implemented.
+Read-only DICOM discovery, series inventory, PET metadata inspection, and the
+approved PET SUVbw/CT HU derived NIfTI conversion are implemented. Conversion
+writes only beneath `output/`, preserves source DICOM as read-only, and performs
+no registration or resampling. Segmentation and later stages are not
+implemented.
 
 ## Deterministic quantitative results
 

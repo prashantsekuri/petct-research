@@ -9,6 +9,8 @@ description = "Research tooling for inspecting and analysing whole-body PET/CT s
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "nibabel>=5.3,<6",
+    "numpy>=2.3,<3",
     "pydicom>=3.0,<4",
 ]
 

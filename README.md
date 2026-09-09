@@ -21,14 +21,17 @@ data must remain outside the repository.
 
 ## Development setup
 
-Use the pre-created `medical_env` virtual environment located beside this
-repository:
+Use the Python 3.12 `totalseg_env` virtual environment located beside this
+repository. It contains both the project dependencies and the isolated medical
+imaging model stack:
 
 ```bash
-source ../medical_env/bin/activate
+conda activate ../totalseg_env
 python -m pip install -e ".[dev]"
 python -m pytest
 ```
+
+The workspace interpreter is configured as `../totalseg_env/bin/python`.
 
 The intended system design is documented in
 [`docs/architecture.md`](docs/architecture.md).
@@ -47,6 +50,41 @@ series, counts instances, and reports whether rows, columns, slice thickness,
 or pixel spacing vary within a series. Non-DICOM and unreadable files are
 skipped without printing their names.
 
-The inventory command performs no writes. PET metadata validation, SUV
-validation, volume conversion, segmentation, and measurement functionality are
-not implemented.
+The inventory command performs no writes. It provides metadata inspection and
+bounded pixel probing, but does not produce derived data.
+
+Inspect allowlisted PT and real-world-value mapping metadata needed for a future
+SUV validation step:
+
+```bash
+python -m petct.inventory /path/to/dicom --pet-details
+```
+
+This mode reports metadata presence and consistency only. It does not calculate
+SUV or establish that existing SUV values are correct.
+
+Probe representative stored pixel values from quantitative `PT`/`BQML` series:
+
+```bash
+python -m petct.inventory /path/to/dicom --pet-pixel-probe
+```
+
+The probe decodes only selected instances, excludes values outside the RWV
+mapping range from quantitative probes, and compares a candidate BQML-to-SUVbw
+transformation with the RWV SUVbw factor. It does not load a complete volume,
+produce NIfTI data, or claim full SUV validation.
+
+## Derived PET and CT NIfTI volumes
+
+Create the two approved derived volumes and allowlisted provenance under the
+Git-ignored `output/nifti/` directory:
+
+```bash
+python -m petct.convert /path/to/dicom
+```
+
+The converter reads the original DICOM study without modifying it. It validates
+slice geometry, creates a candidate PET SUVbw volume and a WB CECT HU volume,
+canonicalizes each to RAS using permutation/flipping only, and verifies the
+written NIfTI geometry. It performs no registration, resampling, segmentation,
+or AI inference. Existing derived files require an explicit `--overwrite`.

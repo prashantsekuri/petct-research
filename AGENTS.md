@@ -27,8 +27,8 @@ deterministic pipeline.
 
 ## Current scope
 
-The implemented scope is limited to read-only DICOM discovery and a study/series
-inventory based on allowlisted metadata. Maintain strict parsing without a
-forced-read fallback unless explicitly requested. Do not add PET-specific
-validation, pixel processing, medical AI models, segmentation logic, or LLM
-integration until explicitly requested.
+The implemented scope includes read-only DICOM discovery, allowlisted PET
+metadata inspection, bounded pixel probes, and derived PET SUVbw/CT HU NIfTI
+conversion under `output/`. Maintain strict parsing without a forced-read
+fallback. Do not add registration, resampling, medical AI models, segmentation
+logic, or LLM integration until explicitly requested.
